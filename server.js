@@ -11,7 +11,7 @@ const classRoutes = require('./routes/classes.js')
 const app = express()
 
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
+app.use(bodyParser.json({extended:true}))
 app.use(cors())
 
 // error handling

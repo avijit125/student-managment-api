@@ -18,8 +18,12 @@ exports.getAllclasses = async(req,res,next)=>{
 // create classes
 exports.createClasses = async(req,res,next)=>{
     try {
-        const data = req.body
-        const updatedClass = new Claseses(data)
+        //destructuring the body
+        const name = req.body.name
+        const desc = req.body.desc
+        const timing = req.body.timimg
+        //storing in database
+        const updatedClass = new Claseses({name,desc,timing})
         await updatedClass.save()
         return res.status(200).json({ message: 'Class created!', updatedClass})
 
@@ -34,10 +38,24 @@ exports.createClasses = async(req,res,next)=>{
 // update classes
 exports.updateClasses = async(req,res,next)=>{
     try {
-        const data = req.body
-        const updatedClass = new Claseses(data)
-        await updatedClass.save()
-        return res.status(200).json({ message: 'Class updated!'})
+        if(req.body.name){
+            const name = req.body.name
+            const updatedClass = new Claseses(name)
+            await updatedClass.save()
+            return res.status(200).json({ message: 'Class updated!'})
+        }
+        if(req.body.desc){
+            const desc = req.body.desc
+            const updatedClass = new Claseses(desc)
+            await updatedClass.save()
+            return res.status(200).json({ message: 'Class updated!'})
+        }
+        if(req.body.timing){
+            const timing = req.body.timing
+            const updatedClass = new Claseses(timing)
+            await updatedClass.save()
+            return res.status(200).json({ message: 'Class updated!'})
+        }
 
     } catch (err) {
        if (!err.statusCode) {
