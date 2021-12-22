@@ -25,7 +25,7 @@ exports.createClasses = async(req,res,next)=>{
         //storing in database
         const updatedClass = new Claseses({name,desc,timing})
         await updatedClass.save()
-        return res.status(200).json({ message: 'Class created!', updatedClass})
+        return res.status(201).json({ message: 'Class created!', updatedClass})
 
     } catch (err) {
        if (!err.statusCode) {
@@ -38,23 +38,21 @@ exports.createClasses = async(req,res,next)=>{
 // update classes
 exports.updateClasses = async(req,res,next)=>{
     try {
+        const id = req.params.id
         if(req.body.name){
             const name = req.body.name
-            const updatedClass = new Claseses(name)
-            await updatedClass.save()
-            return res.status(200).json({ message: 'Class updated!'})
+            await Claseses.findByIdAndUpdate(id,{name})
+            return res.status(202).json({ message: 'Class updated!'})
         }
         if(req.body.desc){
             const desc = req.body.desc
-            const updatedClass = new Claseses(desc)
-            await updatedClass.save()
-            return res.status(200).json({ message: 'Class updated!'})
+            await Claseses.findByIdAndUpdate(id,{desc})
+            return res.status(202).json({ message: 'Class updated!'})
         }
         if(req.body.timing){
             const timing = req.body.timing
-            const updatedClass = new Claseses(timing)
-            await updatedClass.save()
-            return res.status(200).json({ message: 'Class updated!'})
+            await Claseses.findByIdAndUpdate(id,{timing})
+            return res.status(202).json({ message: 'Class updated!'})
         }
 
     } catch (err) {
@@ -69,7 +67,7 @@ exports.updateClasses = async(req,res,next)=>{
 exports.deleteClasses = async(req,res,next)=>{
     try {
         await Claseses.findByIdAndDelete(req.query['id'])
-        return res.status(200).json({ message: 'Class deleted!'})
+        return res.status(202).json({ message: 'Class deleted!'})
 
     } catch (err) {
        if (!err.statusCode) {
