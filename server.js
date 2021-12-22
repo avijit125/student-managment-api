@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+require('./db/conn.js')
 
 // initialized app
 const app = express()
